@@ -26,12 +26,7 @@ def gmailSendEmail(flags, message_subject, message_text, message_to_email):
 
 	logger.info('Sending Message %s', message_to_email)
 
-	# message_text = "<b>This is HTML message.</b><br/><h1>This is headline.</h1>"
-	# message_subject = "JAMES"
-
 	try:
-		# print("%s, %s, %s, %s" % (message_subject, message_text, message_to_email, str(dir(SERVICE))))
-
 		body = send.CreateMessage(message_to_email, message_subject, message_text)
 		message = (SERVICE.users().messages().send(userId="me", body=body).execute())
 		print('Message : %s' % message)

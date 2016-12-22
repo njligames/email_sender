@@ -1,20 +1,9 @@
-#from apiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
 
 from email.mime.text import MIMEText
 import base64
-
-# import send
 import time
-
-# from redis import Redis
-# from rq import Worker, Queue, Connection
-
-# import os
-
-# import redis
-# 
 from redis import Redis, StrictRedis
 from rq import Queue
 from rq import get_current_job
@@ -33,37 +22,15 @@ try:
 except ImportError:
   flags = None
 
-# SCOPES = 'https://www.googleapis.com/auth/gmail.compose' # 1 or more scopes, i.e., 'https://www.googleapis.com/auth/youtube'
-# CLIENT_SECRET_FILE = 'client_secret.json' # downloaded JSON file
-
-# # store = file.Storage('storage.json')
-# store = file.Storage('gmail.storage')
-
-# creds = store.get()
-# if not creds or creds.invalid:
-#   flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
-#   if flags:
-#     creds = tools.run_flow(flow, store, flags)
-#   else:
-#     creds = tools.run(flow, store)
-
-# # API information, i.e., (API='youtube', VERSION='v3')
-# SERVICE = build('gmail', 'v1', http=creds.authorize(Http()))
-
-
-
 message_text = "<html><header><title>This is title</title></header><body>Hello world</body></html>"
-# message_text = "<b>This is HTML message.</b><br/><h1>This is headline.</h1>"
 message_subject = "I love you Natasha"
 email = "jamesfolk1@gmail.com"
 
-emails=["jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com"]
+emails=["jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com", "jamesfolk1@gmail.com"]
 
 from gmailSend import gmailSendEmail
 
 def redis(flags, emails):
-  # redis_conn = Redis(host='127.0.0.1', port=6379)
-  # redis_conn = Redis(host='pub-redis-10320.us-east-1-3.7.ec2.redislabs.com', port=10320)
   redis_conn = StrictRedis(host='pub-redis-10320.us-east-1-3.7.ec2.redislabs.com', port=10320, db=0, password='1Password$', socket_timeout=None, connection_pool=None, charset='utf-8', errors='strict', unix_socket_path=None)
   q = Queue(connection=redis_conn)
 
@@ -91,7 +58,8 @@ def multi(flags, emails):
 
   print("multi process performed %s emails which took %s seconds" % (str(len(emails)), str(end - start)))
 
-# redis(flags, emails)
+#redis(flags, emails)
 multi(flags, emails)
-
+#gmailSendEmail(flags, message_subject, message_text, "jamesfolk1@gmail.com")
+#Quota: https://developers.google.com/gmail/api/v1/reference/quota
 
